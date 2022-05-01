@@ -11,26 +11,27 @@
 static led_strip_t *rgb;
 static uint8_t rgb_state = 0;
 
+// data sequence in WS2812 is GRB instead of RGB
 uint8_t colors[][3] = {
   {255, 255, 255}, // white
-  {255, 0,   0},   // red
-  {0,   255, 0},   // green
+  {255, 0,   0},   // green
+  {0,   255, 0},   // red
   {0,   0,   255}, // blue
   {255, 255, 0},   // yellow
-  {0,   255, 255}, // cyan
-  {255, 0,   255}  // magenta
+  {0,   255, 255}, // magenta
+  {255, 0,   255}  // cyan
 };
 
 void app_main(void) {
     /* Print chip information */
     esp_chip_info_t chip_info;
     esp_chip_info(&chip_info);
-    printf("\nThis is %s chip with %d CPU core(s), WiFi%s%s, ",
+    printf("\n%s with %d CPU core(s), Revision: %d, WiFi%s%s, ",
             CONFIG_IDF_TARGET,
             chip_info.cores,
+            chip_info.revision,
             (chip_info.features & CHIP_FEATURE_BT) ? "/BT" : "",
             (chip_info.features & CHIP_FEATURE_BLE) ? "/BLE" : "");
-    printf("silicon revision %d, ", chip_info.revision);
     printf("%dMB %s flash\n", spi_flash_get_chip_size() / (1024 * 1024),
             (chip_info.features & CHIP_FEATURE_EMB_FLASH) ? "embedded" : "external");
 
