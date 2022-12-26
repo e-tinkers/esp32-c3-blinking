@@ -26,6 +26,7 @@ void app_main(void) {
     /* Print chip information */
     esp_chip_info_t chip_info;
     esp_chip_info(&chip_info);
+
     printf("\n%s with %d CPU core(s), Revision: %d, WiFi%s%s, ",
             CONFIG_IDF_TARGET,
             chip_info.cores,
@@ -36,13 +37,13 @@ void app_main(void) {
             (chip_info.features & CHIP_FEATURE_EMB_FLASH) ? "embedded" : "external");
 
     rgb = led_strip_init(0, RGB_PIN, 1);    // configure RGB
-    rgb->clear(rgb, 50);    //clear all LEDs
+    rgb->clear(rgb, 50);                     // clear all LEDs
 
     uint8_t n = 0;
     while(1) {
         if (rgb_state) {
           rgb->set_pixel(rgb, 0, colors[n][0], colors[n][1], colors[n][2]);
-          rgb->refresh(rgb, 100);    // reflash RGB LED to send data
+          rgb->refresh(rgb, 100);           // reflash RGB LED to send data
           n = (n + 1) % 7;
         }
         else {
