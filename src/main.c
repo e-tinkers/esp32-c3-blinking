@@ -28,6 +28,8 @@ void app_main(void) {
     esp_chip_info_t chip_info;
     esp_chip_info(&chip_info);
 
+    vTaskDelay(200/portTICK_PERIOD_MS);
+
     printf("\n%s with %d CPU core(s), Revision: %d, WiFi%s%s%s, ",
             CONFIG_IDF_TARGET,
             chip_info.cores,
@@ -40,9 +42,9 @@ void app_main(void) {
     printf("%luMB %s flash\n", size_flash_chip / (1024 * 1024), 
           (chip_info.features & CHIP_FEATURE_EMB_FLASH) ? "embedded" : "external");
     
-     printf("Minimum free heap size: %lu bytes\n", esp_get_minimum_free_heap_size());
+    printf("Minimum free heap size: %lu bytes\n", esp_get_minimum_free_heap_size());
 
-    rgb = led_strip_init(0, RGB_PIN, 1);    // configure RGB
+    rgb = led_strip_init(0, RGB_PIN, 1);     // configure RGB
     rgb->clear(rgb, 50);                     // clear all LEDs
 
     uint8_t n = 0;
@@ -58,4 +60,5 @@ void app_main(void) {
         rgb_state = !rgb_state;
         vTaskDelay(1000/portTICK_PERIOD_MS);
     }
+
 }
